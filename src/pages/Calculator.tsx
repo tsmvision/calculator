@@ -1,13 +1,14 @@
 import * as React from 'react';
 import {
-  Card, CardImg, CardText, CardBody,
+  Card, CardText, CardBody,
   CardTitle, CardSubtitle, Button
 } from 'reactstrap';
+import styles from './Calculator.module.scss';
 
 const Calculator = () => {
   return (
     <div>
-      <Card>
+      <Card className={styles.layout}>
         <CardBody>
           <CardTitle>Card title</CardTitle>
           <CardSubtitle>Card subtitle</CardSubtitle>
