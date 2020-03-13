@@ -1,4 +1,4 @@
-Simple Main project using create-react-app and Typescript
+Simple Calculator using create-react-app and Typescript
 
 ## Available Scripts
 
