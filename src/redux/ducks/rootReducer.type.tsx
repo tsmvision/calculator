@@ -1,7 +1,9 @@
+
 export interface State {
-  inputValue1: number,
-  inputValue2: number,
-  outputValue: number
+  inputValue1: null | number,
+  inputValue2: null | number,
+  operator: null | string
+  outputValue: null | number
 }
 
 export interface Payload {

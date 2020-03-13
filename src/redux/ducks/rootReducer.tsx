@@ -75,6 +75,7 @@ export const getCalculatedValue: GetCalculatedValue = (inputValue1, inputValue2,
 export const getState: GetState = (inputValue1, inputValue2, type) => {
   return {
     inputValue1,
+    operator: type,
     inputValue2,
     outputValue: getCalculatedValue(inputValue1, inputValue2, type)
   }
@@ -83,7 +84,8 @@ export const getState: GetState = (inputValue1, inputValue2, type) => {
 const initialState: State = {
   inputValue1: 0,
   inputValue2: 0,
-  outputValue: 0
+  operator: null,
+  outputValue: null
 };
 
 /**

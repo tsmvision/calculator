@@ -1,0 +1,52 @@
+.calculator {
+  width: 238px;
+  height: 370px;
+  background-color: #5C4A4C;
+
+  .display {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    color: white;
+    font-size: 50px;
+    background-color: #5E4D50;
+    height: 70px;
+    padding-top: 5px;
+    padding-right: 10px;
+    font-weight: normal;
+  }
+
+  .buttonGroup {
+    display: flex;
+    justify-content: space-between;
+    .button {
+      width: 55px;
+      height: 55px;
+      border-style: solid;
+      border-color: #5B4949;
+      border-width: 1px 1px 1px 1px;
+      margin: 2px 2px 2px 2px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 25px;
+      color: white;
+      font-weight: bold;
+      background-color: #716966;
+
+      &:active {
+        background-color: lightgray;
+      }
+    }
+    .operatorButton {
+      @extend .button;
+      background-color: #fe9327;
+    }
+
+    .zeroButton {
+      @extend .button;
+      width: 114px;
+    }
+  }
+}
+
