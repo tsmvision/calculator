@@ -65,8 +65,6 @@ const Calculator: any = () => {
     }
   });
 
-  console.log(result, inputValue, displayResult);
-
   return (
     <Card className={styles.layout}>
       <CardBody>
