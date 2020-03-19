@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Card, CardBody, Col, Row } from "reactstrap";
 import { useEffect, useRef, useState } from "react";
 import styles from './Calculator.module.scss';
+import { CalculatorButtonProps, UsePrevious, ResetState, PrevInputValue } from './Calculator.type';
 
 const PLUS = "+";
 const MINUS = "-";
@@ -9,6 +10,12 @@ const DIVIDE = "/";
 const MULTIPLY = "*";
 
 export const OPERATOR = {PLUS, MINUS, DIVIDE, MULTIPLY};
+
+const CalculatorButton = ({className, inputValues, value, label}: CalculatorButtonProps) => {
+  return (
+    <div className={className} onClick={() => inputValues(value)}>{label ? label: value}</div>
+  );
+};
 
 const convertCalculationStringToNumber = (calculationString: string): number => {
   return eval(calculationString);
@@ -18,7 +25,7 @@ const displayValueSanitizer = (value: string): string => {
   return value === "" ? "0": value;
 };
 
-const usePrevious = (value: string): any => {
+const usePrevious: UsePrevious = (value) => {
   const ref: any = useRef();
   useEffect(() => {
     ref.current= value;
@@ -26,7 +33,7 @@ const usePrevious = (value: string): any => {
   return ref.current;
 };
 
-const Calculator: any = () => {
+const Calculator: React.FC = () => {
   const [inputValue, setInputValue]: any = useState("");
   const [result, setResult]: any = useState("");
   const [displayResult, setDisplayResult]: any = useState(false);
@@ -35,7 +42,7 @@ const Calculator: any = () => {
     setInputValue(inputValue + value);
   };
 
-  const calculate = () => {
+  const calculate = (): void => {
     try {
       const calculatedValue: number = convertCalculationStringToNumber(inputValue);
       setResult(String(calculatedValue));
@@ -43,17 +50,18 @@ const Calculator: any = () => {
     } catch (e) {
       setResult("");
       setInputValue("");
+      console.log(e);
     }
   };
 
-  const resetState = () => {
+  const resetState: ResetState = () => {
     setInputValue("");
     setResult(0);
   };
 
-  const prevInputValue = usePrevious(inputValue);
+  const prevInputValue: PrevInputValue = usePrevious(inputValue);
 
-  useEffect(() => {
+  useEffect((): void => {
     if (result) {
       if (prevInputValue !== inputValue) {
         setDisplayResult(false);
@@ -63,7 +71,7 @@ const Calculator: any = () => {
     } else {
       setDisplayResult(false);
     }
-  });
+  }, [result, prevInputValue, inputValues] );
 
   return (
     <Card className={styles.layout}>
@@ -81,28 +89,26 @@ const Calculator: any = () => {
                 <div className={styles.operatorButton} onClick={() => inputValues(OPERATOR.DIVIDE)}>/</div>
               </div>
               <div className={styles.buttonGroup}>
-                <div className={styles.button} onClick={() => inputValues("7")}>7</div>
-                <div className={styles.button} onClick={() => inputValues("8")}>8</div>
-                <div className={styles.button} onClick={() => inputValues("9")}>9</div>
-                <div className={styles.operatorButton} onClick={() => inputValues(OPERATOR.MULTIPLY)}>X
-                </div>
+                <CalculatorButton className={styles.button} inputValues={inputValues} value={"7"} />
+                <CalculatorButton className={styles.button} inputValues={inputValues} value={"8"}/>
+                <CalculatorButton className={styles.button} inputValues={inputValues} value={"9"}/>
+                <CalculatorButton className={styles.operatorButton} inputValues={inputValues} value={OPERATOR.MULTIPLY} label={"X"}/>
               </div>
               <div className={styles.buttonGroup}>
-                <div className={styles.button} onClick={() => inputValues("4")}>4</div>
-                <div className={styles.button} onClick={() => inputValues("5")}>5</div>
-                <div className={styles.button} onClick={() => inputValues("6")}>6</div>
-                <div className={styles.operatorButton} onClick={() => setInputValue(inputValue + OPERATOR.MINUS)}>-
-                </div>
+                <CalculatorButton className={styles.button} inputValues={inputValues} value={"4"}/>
+                <CalculatorButton className={styles.button} inputValues={inputValues} value={"5"}/>
+                <CalculatorButton className={styles.button} inputValues={inputValues} value={"6"}/>
+                <CalculatorButton className={styles.operatorButton} inputValues={inputValues} value={OPERATOR.MINUS} label={"-"}/>
               </div>
               <div className={styles.buttonGroup}>
-                <div className={styles.button} onClick={() => inputValues("1")}>1</div>
-                <div className={styles.button} onClick={() => inputValues("2")}>2</div>
-                <div className={styles.button} onClick={() => inputValues("3")}>3</div>
-                <div className={styles.operatorButton} onClick={() => inputValues(OPERATOR.PLUS)}>+</div>
+                <CalculatorButton className={styles.button} inputValues={inputValues} value={"1"}/>
+                <CalculatorButton className={styles.button} inputValues={inputValues} value={"2"}/>
+                <CalculatorButton className={styles.button} inputValues={inputValues} value={"3"}/>
+                <CalculatorButton className={styles.operatorButton} inputValues={inputValues} value={OPERATOR.PLUS} label={"+"}/>
               </div>
               <div className={styles.buttonGroup}>
-                <div className={styles.zeroButton} onClick={() => inputValues("0")}>0</div>
-                <div className={styles.button} onClick={() => inputValues(".")}>.</div>
+                <CalculatorButton className={styles.zeroButton} inputValues={inputValues} value={"0"}/>
+                <CalculatorButton className={styles.button} inputValues={inputValues} value={"."}/>
                 <div className={styles.operatorButton} onClick={() => calculate()}>=</div>
               </div>
             </div>
